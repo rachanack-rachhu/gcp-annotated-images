@@ -1,0 +1,14 @@
+# cloudbuild.yaml
+steps:
+# First step: Install Python dependencies
+- name: 'gcr.io/cloud-builders/python'
+  entrypoint: 'pip'
+  args: ['install', '-r', 'requirements.txt']
+  
+# Second step: Run the main processing script
+- name: 'gcr.io/cloud-builders/python'
+  entrypoint: 'python'
+  args: [
+    './processing_script.py',
+    '--file-path', '${_GCS_OBJECT_PATH}' # This is a variable we will pass from our Cloud Function
+  ]
